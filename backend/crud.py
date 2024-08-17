@@ -46,8 +46,8 @@ def update_product(db: Session, product_id: int, product: ProductUpdate):
         db_product.price = product.price
     if product.categoria is not None:
         db_product.categoria = product.categoria
-    if product.email_supplier is not None:
-        db_product.email_supplier = product.email_supplier
+    if product.email_fornecedor is not None:
+        db_product.email_fornecedor = product.email_fornecedor
 
     db.commit()
     return db_product

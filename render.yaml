@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: fastapi-backend
+    env: docker
+    repo: https://github.com/seu-usuario/seu-repo
+    dockerfilePath: ./backend/Dockerfile
+    buildCommand: ""
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://user:password@fastapi-db:5432/mydatabase
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /health
+    disk:
+      sizeGB: 1
+      mountPath: /app
+
+  - type: web
+    name: streamlit-frontend
+    env: docker
+    repo: https://github.com/seu-usuario/seu-repo
+    dockerfilePath: ./frontend/Dockerfile
+    buildCommand: ""
+    startCommand: streamlit run app.py --server.port 8501
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /health
+    disk:
+      sizeGB: 1
+      mountPath: /app
+    ports:
+      - port: 8501
+        protocol: tcp
+
+  - type: database
+    name: fastapi-db
+    plan: starter
+    engine: postgres
+    version: latest
+    databases:
+      - mydatabase
+    user: user
+    password: password

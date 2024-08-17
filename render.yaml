@@ -6,6 +6,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     buildCommand: ""
     startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
+    pythonVersion: 3.12.1
     envVars:
       - key: DATABASE_URL
         value: postgresql://user:password@fastapi-db:5432/mydatabase
@@ -22,7 +23,7 @@ services:
     repo: https://github.com/seu-usuario/seu-repo
     dockerfilePath: ./frontend/Dockerfile
     buildCommand: ""
-    startCommand: streamlit run app.py --server.port 8501
+    startCommand: streamlit run .frontend/app.py --server.port 8501
     plan: starter
     autoDeploy: true
     healthCheckPath: /health
